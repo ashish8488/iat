@@ -1,0 +1,134 @@
+{% extends "::adminBase.html.twig" %}
+
+{% block title %}Register Merchant{% endblock title %}
+
+{% block body %}
+	<div class="hed-main">
+		<div class="">
+			<span class="logo"><a href="" >Boowk.com</a></span>
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<span class="user-info">
+									<small>Welcome,</small>
+									{{ (app.user.firstName is defined)?app.user.firstName:'' }}
+								</span>
+								<i class="icon-caret-down"></i>
+							</a>
+							
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="{{ url('iatbundle_admin_logout') }}">
+										<i class="icon-off"></i>
+										Logout
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main-container " id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+				
+				{{ include('IATBundle:Admin:adminSideBar.html.twig') }}
+				
+				<div class="main-content">
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="row">
+									<div class="col-xs-12">
+										<h3 class="header smaller lighter blue">New Merchant Registration</h3>
+										<div class="row">
+											<div class="col-xs-6">
+												<div class="widget-main">
+													<div class="space-6"></div>
+														{{ form_start(form, {'attr': {'novalidate':'true'}}) }}
+															<fieldset>
+																<label class="block clearfix">
+																	<span class="block input-icon input-icon-right">
+																		{{ form_widget(form.firstName, { "attr": { "class":"form-control", "placeholder":"Merchant First Name"} }) }}
+																		<i class="icon-user"></i>
+																		{{ form_errors(form.firstName) }}
+																	</span>
+																</label>
+																<label class="block clearfix">
+																	<span class="block input-icon input-icon-right">
+																		{{ form_widget(form.lastName, { "attr": {"class":"form-control", "placeholder":"Merchant Last Name"} }) }}
+																		<i class="icon-user"></i>
+																		{{ form_errors(form.lastName) }}
+																	</span>
+																</label>
+																<label class="block clearfix">
+																	<span class="block input-icon input-icon-right">
+																		{{ form_widget(form.email, {"attr": {"class": "form-control", "placeholder":"Email Id"} }) }}
+																		<i class="icon-envelope"></i>
+																		{{ form_errors(form.email) }}
+																	</span
+																</label>
+																<label class="block clearfix">
+																	<span class="block input-icon input-icon-right">
+																		{{ form_widget(form.password.first, {"attr": {"class": "form-control", "placeholder":"Enter Password"} }) }}
+																		<i class="icon-lock"></i>
+																		{{ form_errors(form.password.first) }}
+																	</span>
+																</label>
+																<label class="block clearfix">
+																	<span class="block input-icon input-icon-right">
+																		{{ form_widget(form.password.second, {"attr": {"class": "form-control", "placeholder":"Confirm Password"} }) }}
+																		<i class="icon-lock"></i>
+																		{{ form_errors(form.password.second) }}
+																	</span>
+																</label>
+																<div class="space"></div>
+																<div class="clearfix text-center">
+																<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+																	<i class="icon-key"></i>
+																	Create Profile
+																</button>
+															</div>
+															<div class="space-4"></div>
+														</fieldset>
+													{{ form_end(form) }}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div>
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#multi_category').multiselect({
+		            nonSelectedText: 'Merchant Name'
+		        });
+		        $('#multi_category1').multiselect({
+		            nonSelectedText: 'Merchant Deal'
+		        });
+			});
+		</script>
+{% endblock body %}

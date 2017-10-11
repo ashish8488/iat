@@ -1,0 +1,180 @@
+{% extends "::adminBase.html.twig" %}
+
+{% block title %}Deal Link List{% endblock %}
+
+{% block body %}
+	<div class="hed-main">
+		<div class="">
+			<span class="logo"><a href="" >Boowk.com</a></span>
+			<div class="navbar-header pull-right" role="navigation">
+				<ul class="nav ace-nav">
+					<li class="light-blue">
+						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+							<span class="user-info">
+								<small>Welcome,</small>
+								{{ (app.user.firstName is defined)?app.user.firstName:'' }}
+							</span>
+							<i class="icon-caret-down"></i>
+						</a>
+						
+						<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+							<li>
+								<a href="{{ url('iatbundle_admin_logout') }}">
+									<i class="icon-off"></i>
+									Logout
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div class="main-container " id="main-container">
+		<script type="text/javascript">
+			try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+		</script>
+		
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#">
+				<span class="menu-text"></span>
+			</a>
+			
+			{{ include('IATBundle:Admin:adminSideBar.html.twig') }}
+			
+			<div class="main-content">
+				<div class="page-content">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="row">
+								<div class="col-xs-12">
+									<h3 class="header smaller lighter blue">Deal Link List</h3>
+									<div class="table-header">
+										List of Deal Links
+									</div>
+									<div class="row">
+										<div class="col-xs-12">
+											{% if merchantNameFilter is defined and merchantNameFilter | length > 0 %}
+												<form method="get" action="{{ path('iatbundle_admin_dealLinkList') }}" >
+													<div class="select-menu-main width-25">
+														<select id="" class="width-100 js-merchant-name" name="merchant_id">
+															<option value="">Select Merchant Name</option>
+														    {% for merchantDetails in merchantNameFilter %}
+														    	{% set selectedUser %}
+														    		{% if app.request.get('merchant_id', '') != '' and app.request.get('merchant_id') == merchantDetails.userId %}
+														    		    {{ 'selected' }}
+														    		{% else %}
+														    			{{ '' }}
+														    		{% endif %}
+														    	{% endset %}
+														    	<option value="{{ merchantDetails.userId }}" {{ selectedUser }}>{{ merchantDetails.userFullName }}</option>
+														    {% endfor %}
+														</select>
+													</div>
+												</form>
+											{% endif %}
+
+                                            <!-- <div class="select-menu-main width-25">
+                                                <select id="multi_category1" class="multi_category width-100" >
+                                                    <option value="none">Merchant Deal</option>
+                                                    <option value="tomatoes">Tomatoes</option>
+                                                    <option value="Mozzarella">Mozzarella</option>
+                                                    <option value="Mushrooms">Mushrooms</option>
+                                                    <option value="Pepperoni">Pepperoni</option>
+                                                    <option value="Onions">Onions</option>
+                                                    <option value="1">one</option>
+                                                    <option value="2">two</option>
+                                                    <option value="3">three</option>
+                                                    <option value="4">four</option>
+                                                    <option value="5">five</option>
+                                                    <option value="6">six</option>
+                                                    <option value="7">seven</option>
+                                                </select>
+                                            </div> -->
+										</div>
+									</div>
+									<div class="table-responsive">
+                                    	<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                    		<thead>
+                                    			<tr>
+                                    				<th>Sr. No.</th>
+                                    				<th>Date</th>
+                                    				<th>Merchant Name <a href="#"><b class="arrow icon-angle-down pull-right"></b></a></th>
+                                    				<th>Destination <a href="#"><b class="arrow icon-angle-down pull-right"></b></a></th>
+                                    				<th>Deal Link</th>
+                                    				{% if app.user and app.user.type == 'admin' %}
+                                    					<th>Status <a href="#"><b class="arrow icon-angle-down pull-right"></b></a> </th>
+                                    				{% endif %}
+                                    				{# <th>Action</th> #}
+                                    			</tr>
+                                    		</thead>
+                                    		<tbody>
+                                    			{% if dealLinks.items | length > 0 %}
+                                    				{% for dealLink in dealLinks.items %}
+                                    					<tr>
+                                    						<td>{{ loop.index }}</td>
+                                    						<td>{{ dealLink.createdAt | date('d-m-Y') }}</td>
+                                    						<td>{{ dealLink.userId.firstName ~ ' ' ~ dealLink.userId.lastName }}</td>
+                                    						<td>{{ dealLink.destination }}</td>
+                                    						<td>
+                                    							<a target="_blank" href="{{ path('iatbundle_front_showDeal', {'dealLink': dealLink.dealLink }) }}">{{ dealLink.dealLink }}</a>
+                                    						</td>
+                                    						{% if app.user and app.user.type == 'admin' %}
+                                    							{% if dealLinkStatus is defined and dealLinkStatus | length > 0 %}
+                                    								{% if dealLinkStatus[dealLink.dealLink]['status'] is defined and dealLinkStatus[dealLink.dealLink]['status'] != '' %}
+                                    									{% set dlStatus = dealLinkStatus[dealLink.dealLink]['status'] %}
+                                    								{% endif %}
+                                    							{% else %}
+                                    								{% set dlStatus = 'inactive' %}
+                                    							{% endif %}
+                                    							<td>
+                                    								<div class="onoffswitch">
+                                    									<input type="checkbox" name="dealLinkStatus" class="onoffswitch-checkbox js-dealLink-change-status" id="dealLinkStatus-{{ dealLink.id }}" {% if dlStatus == 'active' %}checked{% endif %} data-deal-link = "{{ dealLink.dealLink }}" data-url = "iatbundle_admin_changeDealLinkStatus">
+                                    									<label class="onoffswitch-label" for="dealLinkStatus-{{ dealLink.id }}">
+                                    										<span class="onoffswitch-inner"></span>
+                                    										<span class="onoffswitch-switch"></span>
+                                    									</label>
+                                    								</div>
+                                    							</td>
+                                    						{% endif %}
+                                    						{#
+                                    						<td>
+                                    							<div class="visible-md visible-lg action-buttons">
+                                    								<a class="blue js-view-popup" href="#" data-toggle="modal" data-target="#deal_view_popup" data-url="{{path('iatbundle_admin_viewDeal',{'id' : deal.id})}}">
+                                    									<i class="icon-zoom-in bigger-130"></i>
+                                    								</a>
+                                    								
+                                    								<a class="red js_delete_btn" href="#"  data-toggle="modal" data-target="#deal_delete_popup" data-original-title="Delete Deal" data-id="{{ deal.id }}" data-url="{{ path("iatbundle_admin_deleteDeal") }}">
+                                    									<i class="icon-trash bigger-130"></i>
+                                    								</a>
+                                    							</div>
+                                    						</td>
+                                    						#}
+                                    					</tr>
+                                    				{% endfor %}
+                                    			{% else %}
+                                    				<tr>
+                                    					<td colspan="6">There are no records to display.</td>
+                                    				</tr>
+                                    			{% endif %}
+                                    		</tbody>
+                                    	</table>
+                                    	<div class="col-xs-12 pagination-parts">
+                                    		{{ knp_pagination_render(dealLinks) }}
+                                    	</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id = "dealLink_view_popup" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        	<i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+{% endblock body %}

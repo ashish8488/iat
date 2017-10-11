@@ -1,0 +1,13 @@
+{% block ajax_body %}{% endblock ajax_body %}
+
+{% block javascripts %}{% endblock javascripts %}
+
+{% block header_js %}
+	<!--  Start of enable routing in javascript -->
+	<script src="{{ asset('bundles/fosjsrouting/js/router.js', null, true) }}"></script>
+	<script src="{{ url('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+	<!--  End of enable routing in javascript -->
+	{% javascripts '@IATBundle/Resources/public/js/Front/demo.js' %}
+		<script src="{{ asset_url }}" type='text/javascript'></script>
+	{% endjavascripts %}
+{% endblock header_js %}

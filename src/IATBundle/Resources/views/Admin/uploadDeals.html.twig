@@ -1,0 +1,172 @@
+{% extends "::adminBase.html.twig" %}
+
+{% block title %}Upload Deals{% endblock %}
+
+{% block stylesheets %}
+	{#{ parent() }#}
+	{% stylesheets '@IATBundle/Resources/public/css/Admin/bootstrap.min.css'
+	    '@IATBundle/Resources/public/css/Admin/font-awesome.min.css'
+	    '@IATBundle/Resources/public/css/Admin/dropzone.css'
+	    '@IATBundle/Resources/public/css/Admin/ace-fonts.css'
+	    '@IATBundle/Resources/public/css/Admin/ace.min.css'
+	    '@IATBundle/Resources/public/css/Admin/ace-rtl.min.css'
+	    '@IATBundle/Resources/public/css/Admin/ace-skins.min.css'
+	    output = 'css/dropzone.css'
+	%}
+		<link href='{{ asset_url }}' rel='stylesheet' type='text/css'/>
+    {% endstylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block body %}
+	<div class="hed-main">
+		<div class="">
+			<span class="logo"><a href="" >Boowk.com</a></span>
+			<div class="navbar-header pull-right" role="navigation">
+				<ul class="nav ace-nav">
+					<li class="light-blue">
+						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+							<span class="user-info">
+								<small>Welcome,</small>
+								{{ (app.user.firstName is defined)?app.user.firstName:'' }}
+							</span>
+							<i class="icon-caret-down"></i>
+						</a>
+						
+						<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+							<li>
+								<a href="{{ url('iatbundle_admin_logout') }}">
+									<i class="icon-off"></i>
+									Logout
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+		</script>
+		
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#">
+				<span class="menu-text"></span>
+			</a>
+			
+			{{ include('IATBundle:Admin:adminSideBar.html.twig') }}
+			
+			<div class="main-content">
+				<div class="page-content">
+					<div class="page-header">
+						<h1>
+							Dropzone
+							<small>
+								<i class="icon-double-angle-right"></i>
+								Drag &amp; drop file upload
+							</small>
+						</h1>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+                        	<div id="dropzone">
+                        		<form id="upload" action="{{ path('iatbundle_admin_uploadDealsFile') }}" method="post"  enctype="multipart/form-data" class="dropzone">
+                        			<div class="fallback">
+                        				<input name="dealFile" type="file" multiple="" />
+                        			</div>
+                        		</form>
+                        	</div>
+                        </div>
+                        {{ form_start(form) }}
+    						<div class="col-xs-12">
+    							<div class="row">
+    								<div class="col-md-4 col-sm-6 col-xs-12">
+    									<div class="form-group">
+    										<label for="email">Merchant Name :</label>
+    										{{ form_widget(form.userId, { 'attr': {'class': 'form-control'} }) }}
+    										{{ form_errors(form.userId) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                    	<div class="form-group">
+                                    		<label for="email">Destination :</label>
+                                    		{{ form_widget(form.destination, { 'attr': {'class': 'form-control'} }) }}
+    										{{ form_errors(form.destination) }}
+                                    	</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                    	<div class="form-group">
+                                    		<label for="email">Title :</label>
+                                    		{{ form_widget(form.dealTitle, { 'attr': {'class': 'form-control'} }) }}
+    										{{ form_errors(form.dealTitle) }}
+                                    	</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12"></div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                    	<div class="form-group">
+                                    		<label for="email">Date:</label>
+                                    		<input name="dealDate" type="date" class="form-control" value = "{{ 'now' | date('d-m-Y') }}" disabled>
+                                    	</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xs-12">
+                            	<div class=" padding-10"></div>
+                            </div>
+                            <div class="col-xs-12">
+                            	<button type = "submit" class="btn">Create Deal</button>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        	<i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+	{{ parent() }}
+	
+	{#
+	<script type="text/javascript">
+    	window.jQuery || document.write("<script src='{{ asset('bundles/iat/js/jquery-2.0.3.min.js') }}'>"+"<"+"/script>");
+    </script>
+    
+    <script type="text/javascript">
+    	if("ontouchend" in document) document.write("<script src='{{ asset('bundles/iat/js/jquery.mobile.custom.min.js') }}'>"+"<"+"/script>");
+    </script>
+    #}
+    
+    {% javascripts '@IATBundle/Resources/public/js/Admin/dropzone.min.js' %}
+    	<script src="{{ asset_url }}" type='text/javascript'></script>
+    {% endjavascripts %}
+    
+    <script type="text/javascript">
+    	jQuery(function($){
+        	try {
+            	$(".dropzone").dropzone({
+                	paramName: "dealFile", // The name that will be used to transfer the file
+                	maxFilesize: 5, // MB
+                	addRemoveLinks : true,
+                	dictDefaultMessage :
+                    	'<span class="bigger-150 bolder"><i class="icon-caret-right red"></i> Drop files</span> to upload \
+                    	<span class="smaller-80 grey">(or click)</span> <br /> \
+                    	<i class="upload-icon icon-cloud-upload blue icon-3x"></i>',
+                    dictResponseError: 'Error while uploading file!',
+                    //change the previewTemplate to use Bootstrap progress bars
+                    previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>"
+              	});
+            } catch(e) {
+                alert('Dropzone.js does not support older browsers!');
+            }
+        });
+    </script>
+{% endblock javascripts %}

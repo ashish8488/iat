@@ -1,0 +1,66 @@
+{% extends "::baseAjax.html.twig" %}
+
+{% block ajax_body %}
+	<div class="col-xs-12 select-but js-calender-section">
+		{% if dealData | length == 0 %}
+			<div class="date-sel"><span>There are no deals found for your search criteria. Please try selecting another criteria.</span></div>
+		{% endif %}
+		<div class=" text-right button pull-right">
+			<a href="{{ path('iatbundle_front_getDeal', {'selectedCriteria': criteria | json_encode }) }}" class="btn btn-default">Continue</a>
+		</div>
+		<div class="cal3"></div>
+	</div>
+{% endblock ajax_body %}
+
+{% block javascripts %}
+	<script type="text/template" id="template-calendar-months">
+		<div class="clndr-controls top">
+			<div class="clndr-previous-button">&lsaquo;</div>
+			<div class="clndr-next-button">&rsaquo;</div>
+		</div>
+		<div class="clearfix">
+			<% _.each(months, function(cal) { %>
+				<div class="cal">
+					<div class="clndr-controls">
+						<div class="month"><%= cal.month.format('MMMM YYYY') %></div>
+					</div>
+					<div class="clndr-grid">
+						<div class="days-of-the-week">
+							<% _.each(daysOfTheWeek, function(day) { %>
+								<div class="header-day"><%= day %></div>
+							<% }); %>
+							<div class="days">
+								<% _.each(cal.days, function(day) { %>
+									<div class="<%= day.classes %>"><a href="javascript:void(0)" ><%= day.day %></a><% if(day.day !='' && day.events.length > 0){ %><div class="price"><%= day.events[0]['title'] %></div> <div class="checkbox"><input type="radio" id="calRadio"></div><% } %></div>
+								<% }); %>
+							</div>
+						</div>
+					</div>
+				</div>
+			<% }); %>
+		</div>
+	</script>
+	
+	<script type='text/javascript'>
+	$(function(){
+		{# var SELECTED_MONTH = '{{ (criteria.departureMonth) ? criteria.departureMonth : '' }}'; #}
+		var START_MONTH = '{{ (startMonth is defined and startMonth != '') ? startMonth : ''}}';
+		var END_MONTH = '{{ (endMonth is defined and endMonth != '') ? endMonth : ''}}';
+		var EVENTSARRAY = [];
+		{% if dealData | length > 0 %}
+		    {% for deal in dealData %}
+		    	EVENTSARRAY.push({
+			    	title: '{{ deal.price }}',
+			    	endDate: '{{ deal.endDate | date('Y-m-d') }}',
+			    	startDate: '{{ deal.startDate | date('Y-m-d') }}',
+			    	noOfNights: '{{ deal.noOfNights }}'
+				});
+			{% endfor %}
+		{% endif %}
+
+		var SELECTED_PRICE = '{{ (criteria.price) ? criteria.price: '' }}';
+		var SELECTED_DATE = '{{ (criteria.departureDate) ? criteria.departureDate: '' }}';
+		var SELECTED_NO_OF_NIGHTS = '{{ (criteria.noOfNights and criteria.noOfNights != '') ? criteria.noOfNights : criteria.defaultNoOfnights }}';
+	});
+		</script>
+{% endblock javascripts %}

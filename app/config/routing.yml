@@ -1,0 +1,14 @@
+iatbundle_admin_login_check:
+    pattern: /admin/uk/login_check
+    
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+iat:
+    resource: "@IATBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

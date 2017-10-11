@@ -1,0 +1,53 @@
+{% spaceless %}
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8" />
+			<title>{% block title %}Welcome!{% endblock title %}</title>
+			{% block stylesheets %}
+				{% stylesheets '@IATBundle/Resources/public/css/Admin/bootstrap.min.css'
+        			'@IATBundle/Resources/public/css/Admin/font-awesome.min.css'
+        			'@IATBundle/Resources/public/css/Admin/ace-fonts.css'
+        			'@IATBundle/Resources/public/css/Admin/ace.min.css'
+        			'@IATBundle/Resources/public/css/Admin/ace-rtl.min.css'
+        			'@IATBundle/Resources/public/css/Admin/ace-skins.min.css'
+        			'@IATBundle/Resources/public/css/Admin/style_ace.min_4.css'
+        		    output = 'css/style.css'
+        	    %}
+        			<link href='{{ asset_url }}' rel='stylesheet' type='text/css'/>
+        	    {% endstylesheets %}
+        	    
+        	    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+        	{% endblock stylesheets %}
+        	
+        	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('bundles/iat/images/favicon.ico') }}" />
+			
+			{% block header_js %}
+				<!--  Start of enable routing in javascript -->
+		    	<script src="{{ asset('bundles/fosjsrouting/js/router.js', null, true) }}"></script>
+		    	<script src="{{ url('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+		    	<!--  End of enable routing in javascript -->
+		    	
+			    {% javascripts '@IATBundle/Resources/public/js/Admin/ace-extra.min.js'
+			        '@IATBundle/Resources/public/js/Admin/jquery-2.0.3.min.js'
+			        '@IATBundle/Resources/public/js/Admin/jquery.mobile.custom.min.js'
+			        '@IATBundle/Resources/public/js/Admin/bootbox.min.js'
+			        '@IATBundle/Resources/public/js/Admin/adminMain.js'
+			     %}
+		    	  	<script src="{{ asset_url }}" type='text/javascript'></script>
+		        {% endjavascripts %}
+		    {% endblock header_js %}
+		</head>
+		<body class = "{% block body_class %}{% endblock body_class %}">
+			{% block body %}{% endblock body %}
+            {% block javascripts %}
+            	{% javascripts '@IATBundle/Resources/public/js/Admin/bootstrap.min.js'
+            	    '@IATBundle/Resources/public/js/Admin/ace.min.js'
+            	    '@IATBundle/Resources/public/js/Admin/bootstrap-multiselect.js'
+            	%}
+		    	  	<script src="{{ asset_url }}" type='text/javascript'></script>
+		        {% endjavascripts %}
+            {% endblock javascripts %}
+        </body>
+</html>
+{% endspaceless %}

@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: iat
+    database_user: root
+    database_password: 'iat#@!123'
+    mailer_transport: gmail
+    mailer_host: smtp.gmail.com
+    mailer_user: ashish.zealistic@gmail.com
+    mailer_password: ashish123
+    secret: 677d6220c4ee8e69d60317f1e80e1edef755c4d3

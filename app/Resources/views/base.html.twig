@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="">
+		<meta name="author" content="">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            {% stylesheets '@IATBundle/Resources/public/css/Front/bootstrap.min.css'
+                '@IATBundle/Resources/public/css/Front/clndr.css'
+                '@IATBundle/Resources/public/css/Front/font-awesome.css'
+                '@IATBundle/Resources/public/css/Front/datepicker.css'
+                '@IATBundle/Resources/public/css/Front/style_clndr_2.css'
+                output = 'css/style.css'
+            %}
+            	<link href='{{ asset_url }}' rel='stylesheet' type='text/css'/>
+            {% endstylesheets %}
+            <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+        {% endblock stylesheets %}
+        
+        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/iat/images/favicon.ico') }}" />
+        
+        {% block header_js %}
+				<!--  Start of enable routing in javascript -->
+		    	<script src="{{ asset('bundles/fosjsrouting/js/router.js', null, true) }}"></script>
+		    	<script src="{{ url('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+		    	<!--  End of enable routing in javascript -->
+		    	
+			    {% javascripts '@IATBundle/Resources/public/js/Front/jquery.min.js'
+			        '@IATBundle/Resources/public/js/Front/bootstrap.min.js'
+			        '@IATBundle/Resources/public/js/Front/underscore-min.js'
+			        '@IATBundle/Resources/public/js/Front/moment.min.js'
+			        '@IATBundle/Resources/public/js/Front/clndr.js'
+			        '@IATBundle/Resources/public/js/Front/demo.js'
+			        '@IATBundle/Resources/public/js/Front/main.js'
+			     %}
+		    	  	<script src="{{ asset_url }}" type='text/javascript'></script>
+		        {% endjavascripts %}
+		    {% endblock header_js %}
+    </head>
+    <body>
+        {% block body %}{% endblock body %}
+        {% block javascripts %}{% endblock javascripts %}
+    </body>
+</html>

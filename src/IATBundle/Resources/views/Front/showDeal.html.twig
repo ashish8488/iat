@@ -1,0 +1,192 @@
+{% extends app.request.isXmlHttpRequest ? "IATBundle:Front:showDealAjax.html.twig":"::base.html.twig" %}
+
+{% block title %}Show Deal{% endblock %}
+
+{% block body %}
+	<div class="hed-main">
+		<div class="container">
+			<span class="logo"><a href="" >Boowk.com</a></span>
+		</div>
+	</div>
+	<div class="container ">
+		<div  class="top-space-all"></div>
+		<div class="row">
+			<div class="col-xs-12"></div>
+		</div>
+		<div class="row">
+			<div class="contener-parts">
+				<div class="col-xs-12">
+					<div class="con-hed-tit">
+						{{ dealTitle ? dealTitle : '' }}
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div class="deal-filters ">
+						{% if dealLinkStatus is defined and dealLinkStatus == 'inactive' %}
+							<h3>The deal is now closed.</h3>
+							<h4><i class="fa fa-mouse-pointer"></i> <i>Choose options below to display deals - click dates to proceed</i></h4>
+						{% else %}
+							<h4><i class="fa fa-mouse-pointer"></i> <i>Choose options below to display deals - click dates to proceed</i></h4>
+    						{% if filters | length > 0 %}
+    							<form id='dealForm' action="{{ path('iatbundle_front_showDeal', { 'dealLink': criteria['dealLink'] }) }}" method="post">
+        							<h3 class="choose_duration"><span><i class="fa fa-bed"></i> Number of  Nights</span></h3>
+        							<div class="departure_airport">
+        								{% if filters.noOfNights is defined and filters.noOfNights | length > 0 %}
+        									{% for noOfNights in filters.noOfNights %}
+        										<div class="all-checkbox">
+        											{% set selectedCriteriaNights %}
+        												{% if criteria.noOfNights != '' and criteria.noOfNights == noOfNights %}
+        													{{ 'checked' }}
+        												{% else %}
+        													{{ '' }}
+        												{% endif %}
+        											{% endset %}
+        											<input type="radio" data-filter-id="noOfNights" value = "{{ noOfNights }}" id="{{ noOfNights }}-Nights" class="css-checkbox js-calender-filter" data-filter-type="noOfNights" name="noOfNights" data-no-of-nights = "{{ noOfNights }}" data-url = "iatbundle_front_showDeal" {{ selectedCriteriaNights }}>
+        											<label for="{{ noOfNights }}-Nights" class="css-label">{{ noOfNights }} Nights</label>
+        										</div>
+        									{% endfor %}
+        								{% endif %}
+        							</div>
+        							
+        							<h3><span><i class="fa fa-plane"></i> Departure Airports</span></h3>
+        							<div class="departure_airport">
+        								{% if filters.departureAirport is defined and filters.departureAirport | length > 0 %}
+        									{% for departureAirport in filters.departureAirport %}
+        										{% set selectedCriteriaDepartureAirport %}
+        											{% if criteria.departureAirport != '' and criteria.departureAirport == departureAirport %}
+        												{{ 'checked' }}
+        											{% else %}
+        												{{ '' }}
+        											{% endif %}
+        										{% endset %}
+        											
+        										<div class="all-checkbox">
+        											<input type="radio" data-filter-id="departureAirport" value="{{ departureAirport }}" id="{{ departureAirport }}" class="css-checkbox js-calender-filter" data-filter-type="departureAirport" name="departureAirport"  data-departure-airport = "{{ departureAirport }}" data-url = "iatbundle_front_showDeal" {{ selectedCriteriaDepartureAirport }}>
+        											<label for="{{ departureAirport }}" class="css-label">{{ departureAirport }}</label>
+        										</div>
+        									{% endfor %}
+        								{% endif %}
+        							</div>
+        							
+        							<h3><span><i class="fa fa-calendar-times-o"></i> Departure Months</span></h3>
+        							<div class="departure_airport">
+        								{% if filters.departureMonth is defined and filters.departureMonth != '' %}
+        								    {% for departureMonth in filters.departureMonth %}
+        								    	{% set selectedCriteriaDepartureMonth %}
+        											{% if criteria.departureMonth != '' and criteria.departureMonth == departureMonth %}
+        												{{ 'checked' }}
+        											{% else %}
+        												{{ '' }}
+        											{% endif %}
+        										{% endset %}
+        								    	<div class="all-checkbox">
+        								    		<input type="radio" data-filter-id="departureMonths" value="{{ departureMonth }}" id="{{ departureMonth }}" class="css-checkbox js-calender-filter" data-filter-type="departureMonths" name="departureMonth"  data-departure-month = "{{ departureMonth }}" data-url = "iatbundle_front_showDeal" {{ selectedCriteriaDepartureMonth }}>
+        											<label for="{{ departureMonth }}" class="css-label">{{ departureMonth | date('Y-M') }}</label>
+        										</div>
+        									{% endfor %}
+        								{% endif %}
+        							</div>
+        							
+        							{% if filters.extras is defined and filters.extras | length > 0 %}
+        								<h3 class="choose_duration"><span><i class=""></i> Extras</span></h3>
+        								<div class="departure_airport">
+        									{% for extras in filters.extras %}
+        										<div class="all-checkbox">
+        											{% set selectedCriteriaExtras %}
+        												{% if criteria.extras != '' and criteria.extras == extras %}
+        													{{ 'checked' }}
+        												{% else %}
+        													{{ '' }}
+        												{% endif %}
+        											{% endset %}
+        											<input type="radio" data-filter-id="noOfNights" value = "{{ extras }}" id="{{ extras }}" class="css-checkbox js-calender-filter" data-filter-type="extras" name="extras" data-extras = "{{ extras }}" data-url = "iatbundle_front_showDeal" {{ selectedCriteriaExtras }}>
+        											<label for="{{ extras }}" class="css-label">{{ extras }}</label>
+        										</div>
+        									{% endfor %}
+        								</div>
+        							{% endif %}
+        							
+        							<input type="hidden" name="selectedDealPrice" id = "selectedDealPrice" value = "" >
+        							<input type="hidden" name="selectedDepartureDate" id = "selectedDepartureDate" value = "" >
+        							<input type="hidden" name="defaultNoOfnights" id = "defaultNoOfnights" value = "" >
+        						</form>
+    						{% endif %}
+    					{% endif %}
+    				</div>
+    			</div>
+    			{% if dealLinkStatus is defined and dealLinkStatus == 'active' %}
+    				<div class="col-xs-12">
+    					<div class="select-date-main">
+    						<div class="date-sel"><span><i class="fa fa-calendar"></i> Select your Departure Date/Price Per Person and Click Continue >></span></div>
+    						<div class="col-xs-12 select-but js-calender-section">
+    							{% block ajax_body %}
+    								{% if dealData | length == 0 %}
+    									<div class="date-sel"><span>There are no deals found for your search criteria. Please try selecting another criteria.</span></div>
+    								{% endif %}
+    								<div class=" text-right button pull-right">
+    									<a href="{{ path('iatbundle_front_getDeal', {'selectedCriteria': criteria | json_encode }) }}" class="btn btn-default">Continue</a>
+    								</div>
+    								<div class="cal3"></div>
+    							{% endblock ajax_body %}
+    						</div>
+    					</div>
+    				</div>
+    			{% endif %}
+    		</div>
+    	</div>
+    	<div class="footer-main">
+    		<div class="container">
+    	</div>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+	<script type="text/template" id="template-calendar-months">
+		<div class="clndr-controls top">
+			<div class="clndr-previous-button">&lsaquo;</div>
+			<div class="clndr-next-button">&rsaquo;</div>
+		</div>
+		<div class="clearfix">
+			<% _.each(months, function(cal) { %>
+				<div class="cal">
+					<div class="clndr-controls">
+						<div class="month"><%= cal.month.format('MMMM YYYY') %></div>
+					</div>
+					<div class="clndr-grid">
+						<div class="days-of-the-week">
+							<% _.each(daysOfTheWeek, function(day) { %>
+								<div class="header-day"><%= day %></div>
+							<% }); %>
+							<div class="days">
+								<% _.each(cal.days, function(day) { %>
+									<div class="<%= day.classes %>"><a href="javascript:void(0)" ><%= day.day %></a><% if(day.day !='' && day.events.length > 0){ %><div class="price"><%= day.events[0]['title'] %></div> <div class="checkbox"><input type="radio" id="calRadio"></div><% } %></div>
+								<% }); %>
+							</div>
+						</div>
+					</div>
+				</div>
+			<% }); %>
+		</div>
+	</script>
+	
+	<script type='text/javascript'>
+		{# var SELECTED_MONTH = '{{ (criteria.departureMonth) ? criteria.departureMonth : '' }}'; #}
+		var START_MONTH = '{{ (startMonth is defined and startMonth != '') ? startMonth : ''}}';
+		var END_MONTH = '{{ (endMonth is defined and endMonth != '') ? endMonth : ''}}';
+		var EVENTSARRAY = [];
+		{% if dealData | length > 0 %}
+		    {% for deal in dealData %}
+		    	EVENTSARRAY.push({
+			    	title: '{{ deal.price }}',
+			    	endDate: '{{ deal.endDate | date('Y-m-d') }}',
+			    	startDate: '{{ deal.startDate | date('Y-m-d') }}',
+			    	noOfNights: '{{ deal.noOfNights }}'
+				});
+			{% endfor %}
+		{% endif %}
+
+		var SELECTED_PRICE = '{{ (criteria.price) ? criteria.price: '' }}';
+		var SELECTED_DATE = '{{ (criteria.departureDate) ? criteria.departureDate: '' }}';
+		var SELECTED_NO_OF_NIGHTS = '{{ (criteria.noOfNights and criteria.noOfNights != '') ? criteria.noOfNights : criteria.defaultNoOfnights }}';
+	</script>
+{% endblock javascripts %}

@@ -1,0 +1,99 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        iatbundle_userprovider:
+            id: iat.user_provider.email
+            
+    encoders:
+        IATBundle\Entity\User:
+            id: user.password.encoder
+            
+    role_hierarchy:
+        ROLE_USER: [ROLE_ANONYMOUS]
+        ROLE_MERCHANT: [ ROLE_MERCHANT ]
+        ROLE_SUPER_ADMIN: [ ROLE_ADMIN ]
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        admin:
+            #pattern:            /admin/(.*)
+            pattern:            /admin
+            form_login:
+                provider:       iatbundle_userprovider
+                login_path:     iatbundle_admin_login
+#                check_path:     /admin/{_locale}/login_check
+                check_path:     iatbundle_admin_login_check
+                default_target_path: /admin/uk/
+#                success_handler: officebrain_user.authentication_handler
+                success_handler: iat_user.admin_authentication_handler
+                failure_handler: iat_user.failure_handler
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000
+                path:     /
+                domain:   ~
+                user_provider: iatbundle_userprovider
+            logout:
+                path:           iatbundle_admin_logout
+                target:         iatbundle_admin_login
+                success_handler: iat_user.admin_logout_listner
+                invalidate_session: false
+            anonymous:        true
+            context:          application
+            security: true
+#        main:
+#            pattern: ^/
+#            form_login:
+#                provider:       iatbundle_userprovider
+##                login_path:     /login
+##                check_path:     /login_check
+#                login_path:     office_brain_userbundle_login_login
+#                check_path:     office_brain_userbundle_login_check
+#                success_handler: officebrain_user.authentication_handler
+#                failure_handler: iat_user.failure_handler
+#                default_target_path: /
+#            remember_me:
+#                key:      "%secret%"
+#                lifetime: 31536000
+#                path:     /
+#                domain:   ~
+#                user_provider: iatbundle_userprovider
+#            logout:
+#                path:           office_brain_userbundle_login_logout
+#                target:         office_brain_page_homepage_view
+#                success_handler: office_brain_user.logout_listner
+#                invalidate_session: false
+#            security: true
+#            anonymous:        true
+#            context:         application
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+    access_control:
+      - { path: ^/admin/uk/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/admin/uk/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/admin/uk/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/admin/uk/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/admin/uk/registerMerchant$, role: [ROLE_ADMIN] }
+      - { path: ^/admin/uk/uploadDeals$, role: [ROLE_ADMIN] }
+      - { path: ^/admin/uk/listInquiry$, role: [ROLE_MERCHANT] }
+#      - { path: ^/(.*)/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#      - { path: ^/(.*)/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#      - { path: ^/(.*)/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#      - { path: ^/(.*)/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#      - { path: ^/(.*)/my-account, role: [ROLE_ADMINISTRATOR, ROLE_ADMIN, ROLE_USER,ROLE_ANONYMOUS] }
+      - { path: ^/admin, role: [ ROLE_MERCHANT, ROLE_ADMIN ] }
+#      - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#      - { path: ^/, role: [ROLE_ADMINISTRATOR, ROLE_ADMIN, ROLE_USER ] }

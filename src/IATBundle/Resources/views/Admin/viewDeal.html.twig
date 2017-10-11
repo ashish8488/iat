@@ -1,0 +1,45 @@
+
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header no-padding">
+				<div class="table-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						<span class="white">&times;</span>
+					</button>
+					View Details
+				</div>
+			</div>
+
+			<div class="modal-body">
+				<table class="table">                           
+                        <tbody>
+                            <tr>
+                                <td>Deal Title</td>
+                                <td>{{ deal.dealTitle }}</td>
+                            </tr>
+                            <tr>
+                                <td>Start Date</td>
+                                <td>{{ deal.startDate | date('d-m-Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td>End Date</td>
+                                <td>{{ deal.endDate | date('d-m-Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td>No Of Nights</td>
+                                <td>{{ deal.noOfNights }}</td>
+                            </tr>
+                            <tr>
+                                <td>Price</td>
+                                <td>{{ deal.price }}</td> 
+                            </tr>
+                            <tr>
+                                <td>Departure Airport</td> 
+                                <td>{{ deal.departureAirport }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+			</div>
+			
+		</div> 
+	</div> 

@@ -1,0 +1,62 @@
+{% set current_route_name = app.request.attributes.get('_route') %}
+<div class="sidebar" id="sidebar">
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+	</script>
+	
+	<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+		<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+			<span class="btn btn-success"></span>
+			
+			<span class="btn btn-info"></span>
+			
+			<span class="btn btn-warning"></span>
+			
+			<span class="btn btn-danger"></span>
+		</div>
+	</div><!-- #sidebar-shortcuts -->
+	
+	<ul class="nav nav-list">
+		<li {{ current_route_name matches '/^iatbundle_admin_listDeal/' ? 'class="active" ' : ''  }}>
+    			<a href="{{ path('iatbundle_admin_listDeal') }}" class="">
+    				<i class="icon-list"></i>
+    				<span class="menu-text">Deal List </span>
+    			</a>
+    		</li>
+		{% if app.user and app.user.type == 'merchant' %}
+    		<li {{ current_route_name matches '/^iatbundle_admin_listInquiry/' ? 'class="active" ' : ''  }}>
+    			<a href="{{ path('iatbundle_admin_listInquiry') }}" class="">
+    				<i class="icon-list"></i>
+    				<span class="menu-text">Customer List</span>
+    			</a>
+    		</li>
+    	{% endif %}
+    	
+    	{% if app.user and app.user.type == 'admin' %}
+    		
+    		<li {{ current_route_name matches '/^iatbundle_admin_dealLinkList/' ? 'class="active" ' : ''  }}>
+    			<a href="{{ path('iatbundle_admin_dealLinkList') }}" class="">
+    				<i class="icon-list"></i>
+    				<span class="menu-text">Deal Link List </span>
+    			</a>
+    		</li>
+    		
+    		<li {{ current_route_name matches '/^iatbundle_admin_uploadDeals/' ? 'class="active" ' : ''  }}>
+    			<a href="{{ path('iatbundle_admin_uploadDeals') }}" class="">
+    				<i class="icon-edit"></i>
+    				<span class="menu-text"> New Deal </span>
+    			</a>
+    		</li>
+    		<li  {{ current_route_name matches '/^iatbundle_admin_registerMerchant/' ? 'class="active" ' : ''  }}>
+    			<a href="{{ path('iatbundle_admin_registerMerchant') }}" class="">
+    				<i class="icon-user"></i>
+    				<span class="menu-text">New Merchant login</span>
+    			</a>
+    		</li>
+    	{% endif %}
+	</ul>
+	
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+	</script>
+</div>

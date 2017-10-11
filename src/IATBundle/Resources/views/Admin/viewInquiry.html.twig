@@ -1,0 +1,65 @@
+
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header no-padding">
+				<div class="table-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						<span class="white">&times;</span>
+					</button>
+					View Details
+				</div>
+			</div>
+
+			<div class="modal-body">
+				<table class="table">                           
+                        <tbody>
+                            <tr>
+                                <td>FIRST PASSENGER NAME</td>
+                                <td>{{ inquiry.cust1FName ~ ' ' ~ inquiry.cust1LName }}</td>
+                            </tr>
+                            <tr>
+                                <td>SECOND PASSENGER NAME</td>
+                                <td>{{ inquiry.cust2FName ~ ' ' ~ inquiry.cust2LName }}</td>
+                            </tr>
+                            <tr>
+                                <td>Deal Link</td>
+                                <td>{{ inquiry.dealId.dealLink }}</td> 
+                            </tr>
+                            <tr>
+                                <td>Destination</td> 
+                                <td>{{ inquiry.dealId.destination }}</td>
+                            </tr>
+                            <tr>
+                                <td>ADDRESS 1</td>
+                                <td>{{ inquiry.address1 }}</td>
+                            </tr>
+                            <tr>
+                                <td>ADDRESS 2</td>
+                                <td>{{ inquiry.address2 }}</td>
+                            </tr>
+                            <tr>
+                                <td>COUNTRY</td>
+                                <td>{{ inquiry.country }}</td>
+                            </tr>
+                            <tr>
+                                <td>STATE/PROVINCE</td>
+                                <td>{{ inquiry.state }}</td>
+                            </tr>
+                            <tr>
+                                <td>CITY</td>
+                                <td>{{ inquiry.city }}</td>
+                            </tr>
+                            <tr>
+                                <td>ZIP CODE / POSTAL CODE</td>
+                                <td>{{ inquiry.zipcode }}</td>
+                            </tr>
+                            <tr>
+                                <td>PHONE Number</td>
+                                <td>{{ inquiry.phone }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+			</div>
+			
+		</div> 
+	</div> 
