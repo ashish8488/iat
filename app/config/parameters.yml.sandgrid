@@ -1,0 +1,22 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: zealisti_iat
+    database_user: zealisti_iat_adm
+    database_password: 'X9r_0F4y+JhR'
+    mailer_transport: smtp
+    mailer_host: smtp.sendgrid.net
+    mailer_user: zealistic_iat_email_key
+    mailer_password: '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'
+    mailer_encryption: ssl
+    mailer_port: 587
+    mailer_auth_mode: login
+    webmaster_email: shahparthanil@gmail.com
+    webmaster_name: "Ashish Shah"
+    secret: 677d6220c4ee8e69d60317f1e80e1edef755c4d3
+    
+    base_url: "http://localhost/iat/"
+    base_path: "%kernel.root_dir%/../web"
+    deal_file_directory: "%base_path%/deal_excel"
+    group_on_code_file_directory: "%base_path%/group_on_code"

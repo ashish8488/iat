@@ -29,9 +29,8 @@ security:
                 provider:       iatbundle_userprovider
                 login_path:     iatbundle_admin_login
 #                check_path:     /admin/{_locale}/login_check
-                check_path:     iatbundle_admin_login_check
+                check_path:     iatbundle_login_admin_check
                 default_target_path: /admin/
-#                success_handler: officebrain_user.authentication_handler
                 success_handler: iat_user.admin_authentication_handler
                 failure_handler: iat_user.failure_handler
             remember_me:
@@ -48,31 +47,6 @@ security:
             anonymous:        true
             context:          application
             security: true
-#        main:
-#            pattern: ^/
-#            form_login:
-#                provider:       iatbundle_userprovider
-##                login_path:     /login
-##                check_path:     /login_check
-#                login_path:     office_brain_userbundle_login_login
-#                check_path:     office_brain_userbundle_login_check
-#                success_handler: officebrain_user.authentication_handler
-#                failure_handler: iat_user.failure_handler
-#                default_target_path: /
-#            remember_me:
-#                key:      "%secret%"
-#                lifetime: 31536000
-#                path:     /
-#                domain:   ~
-#                user_provider: iatbundle_userprovider
-#            logout:
-#                path:           office_brain_userbundle_login_logout
-#                target:         office_brain_page_homepage_view
-#                success_handler: office_brain_user.logout_listner
-#                invalidate_session: false
-#            security: true
-#            anonymous:        true
-#            context:         application
             # activate different ways to authenticate
 
             # http_basic: ~
