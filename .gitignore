@@ -15,6 +15,9 @@
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
 
+#Vendor Directory
+vendor*
+
 # Parameters
 /app/config/parameters.yml
 /app/config/parameters.ini
